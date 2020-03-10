@@ -10,7 +10,7 @@ const twenties = [];
 
 
 /*******************************************************************
- * Method-y Helper Functions Your Back-End Dev Has WRitten For You *
+ * Method-y Helper Functions Your Back-End Dev Has Written For You *
  ******************************************************************/
 
 
