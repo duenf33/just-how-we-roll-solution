@@ -80,6 +80,19 @@ const d20Button = document.querySelector('#d20-roll');
 const resetButton = document.querySelector('#reset-button');
 
 
+/********************
+* Math-Area Queries *
+********************/
+
+const d6Mean = document.querySelector('#d6-rolls-mean')
+const d6Median = document.querySelector('#d6-rolls-median')
+const doubleD6Mean = document.querySelector('#double-d6-rolls-mean')
+const doubleD6Median = document.querySelector('#double-d6-rolls-median')
+const d12Mean = document.querySelector('#d12-rolls-mean')
+const d12Median = document.querySelector('#d12-rolls-median')
+const d20Mean = document.querySelector('#d20-rolls-mean')
+const d20Median = document.querySelector('#d20-rolls-median')
+
 
 /******************
  * CLICK HANDLERS *
@@ -153,6 +166,7 @@ const resetAll = function() {
   d20Median.innerText = '';
 }
 
+
 /*******************
  * EVENT LISTENERS *
  *******************/
@@ -165,10 +179,11 @@ d20Button.addEventListener('click', rollD20);
 resetButton.addEventListener('click', resetAll);
 
 
+
 /****************
  * MATH SECTION *
  ****************/
-function getMean(rolls) {
+const getMean = function(rolls) {
   let sum = 0;
   for (const roll of rolls) {
     sum += roll;
@@ -178,7 +193,7 @@ function getMean(rolls) {
 }
 
 
-function getMedian(rolls) {
+const getMedian = function(rolls) {
   const sorted = sortByNumber(rolls);
   const midPoint = Math.floor(sorted.length / 2)
   if (sorted.length % 2 === 0) {
@@ -190,7 +205,7 @@ function getMedian(rolls) {
   }
 }
 
-function getMode(rolls) {
+const getMode = function(rolls) {
    const counts = [];
    for (const roll of rolls) {
      let found = false;
@@ -241,19 +256,4 @@ function getMode(rolls) {
   // }
 // 
   // return mode;
-// }
-
-
-
-/********************
-* Math-Area Queries *
-********************/
-
-const d6Mean = document.querySelector('#d6-rolls-mean')
-const d6Median = document.querySelector('#d6-rolls-median')
-const doubleD6Mean = document.querySelector('#double-d6-rolls-mean')
-const doubleD6Median = document.querySelector('#double-d6-rolls-median')
-const d12Mean = document.querySelector('#d12-rolls-mean')
-const d12Median = document.querySelector('#d12-rolls-median')
-const d20Mean = document.querySelector('#d20-rolls-mean')
-const d20Median = document.querySelector('#d20-rolls-median')
+}
