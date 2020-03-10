@@ -31,30 +31,6 @@ const sortByNumber = function(arr) {
 }
 
 
-/****************
- * MATH SECTION *
- ****************/
-function getMean(rolls) {
-  let sum = 0;
-  for (const roll of rolls) {
-    sum += roll;
-  }
-
-  return (sum / rolls.length).toFixed(2);
-}
-
-
-function getMedian(rolls) {
-  const sorted = sortByNumber(rolls);
-  const midPoint = Math.floor(sorted.length / 2)
-  if (sorted.length % 2 === 0) {
-    return getMean([sorted[midPoint], sorted[midPoint - 1]]);
-    // Or, the manual way:
-    //return ((sorted[midPoint] + sorted[midPoint - 1]) / 2).toFixed(2);
-  } else {
-    return sorted[midPoint].toFixed(2);
-  }
-}
 
 
 const getImagePathD6 = function(roll) {
@@ -79,18 +55,6 @@ const d20Button = document.querySelector('#d20-roll');
 const resetButton = document.querySelector('#reset-button');
 
 
-/********************
-* Math-Area Queries *
-********************/
-
-const d6Mean = document.querySelector('#d6-rolls-mean')
-const d6Median = document.querySelector('#d6-rolls-median')
-const doubleD6Mean = document.querySelector('#double-d6-rolls-mean')
-const doubleD6Median = document.querySelector('#double-d6-rolls-median')
-const d12Mean = document.querySelector('#d12-rolls-mean')
-const d12Median = document.querySelector('#d12-rolls-median')
-const d20Mean = document.querySelector('#d20-rolls-mean')
-const d20Median = document.querySelector('#d20-rolls-median')
 
 /******************
  * CLICK HANDLERS *
@@ -174,3 +138,97 @@ doubleD6Button2.addEventListener('click', rollDoubleD6);
 d12Button.addEventListener('click', rollD12);
 d20Button.addEventListener('click', rollD20);
 resetButton.addEventListener('click', resetAll);
+
+
+/****************
+ * MATH SECTION *
+ ****************/
+function getMean(rolls) {
+  let sum = 0;
+  for (const roll of rolls) {
+    sum += roll;
+  }
+
+  return (sum / rolls.length).toFixed(2);
+}
+
+
+function getMedian(rolls) {
+  const sorted = sortByNumber(rolls);
+  const midPoint = Math.floor(sorted.length / 2)
+  if (sorted.length % 2 === 0) {
+    return getMean([sorted[midPoint], sorted[midPoint - 1]]);
+    // Or, the manual way:
+    //return ((sorted[midPoint] + sorted[midPoint - 1]) / 2).toFixed(2);
+  } else {
+    return sorted[midPoint].toFixed(2);
+  }
+}
+
+function getMode(rolls) {
+   const counts = [];
+   for (const roll of rolls) {
+     let found = false;
+     for (const count of counts) {
+       if (count[0] === roll) {
+         found = true;
+         count[1]++;
+       }
+     }
+
+     if (!found) {
+       counts.push([roll, 1]);
+     }
+   }
+   let mode = counts[0][0];
+   let highest = counts[0][1];
+   for (const count of counts) {
+     const roll = count[0];
+     const rollCount = count[1];
+     if (rollCount > highest) {
+       mode = roll;
+       highest = rollCount;
+     }
+   }
+
+   return mode;
+
+  // One pass version
+  // const counts = [];
+  // let mode = rolls[0];
+  // let highestCountSeen = 0;
+  // for (const roll of rolls) {
+    // let found = false;
+    // for (const count of counts) {
+      // if (count[0] === roll) {
+        // count[1]++;
+        // found = true;
+        // if (count[1] > highestCountSeen) {
+          // highestCountSeen = count[1];
+          // mode = count[0];
+        // }
+      // }
+    // }
+// 
+    // if (!found) {
+      // counts.push([roll, 1]);
+    // }
+  // }
+// 
+  // return mode;
+// }
+
+
+
+/********************
+* Math-Area Queries *
+********************/
+
+const d6Mean = document.querySelector('#d6-rolls-mean')
+const d6Median = document.querySelector('#d6-rolls-median')
+const doubleD6Mean = document.querySelector('#double-d6-rolls-mean')
+const doubleD6Median = document.querySelector('#double-d6-rolls-median')
+const d12Mean = document.querySelector('#d12-rolls-mean')
+const d12Median = document.querySelector('#d12-rolls-median')
+const d20Mean = document.querySelector('#d20-rolls-mean')
+const d20Median = document.querySelector('#d20-rolls-median')
