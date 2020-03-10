@@ -30,7 +30,9 @@ const sortByNumber = function(arr) {
   return arr.slice().sort(byNumber);
 }
 
-
+/********************************
+* STRETCH GOAL HELPER FUNCTIONS *
+********************************/
 
 
 const getImagePathD6 = function(roll) {
@@ -39,6 +41,29 @@ const getImagePathD6 = function(roll) {
 
 const getImagePathNumbers = function(roll) {
   return `./images/numbers/${roll}.png`
+}
+
+const setText = function(selector, text) {
+  document.querySelector(selector).innerText = text;
+}
+
+const setSrc = function(selector, src) {
+  document.querySelector(selector).src = src;
+}
+
+const addClickEventHandler = function(selector, func) {
+  document.querySelector(selector).addEventListener('click', func);
+}
+
+const addThing = function(selector, value, type) {
+  const node = document.querySelector(selector);
+  if (type === 'src') {
+    node.src = value;
+  } else if (type === 'text') {
+    node.innerText = value;
+  } else if (type === 'click') {
+    node.addEventListener('click', value);
+  }
 }
 
 
