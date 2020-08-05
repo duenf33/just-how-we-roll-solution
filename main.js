@@ -102,58 +102,32 @@ const d20Mode = document.querySelector('#d20-rolls-mode')
  * CLICK HANDLERS *
  ******************/
 
-let animationInterval;
-let animationFrames = 0;
-const updateD6RollAnimation = function() {
-  const roll = getRandomNumber(6);
-  d6Button.src = getImagePathD6(roll);
-  animationFrames++;
-  if (animationFrames >= 10) {
-    animationFrames = 0;
-    clearInterval(animationInterval);
-    const roll = getRandomNumber(6);
-    sixes.push(roll);
-    const median = getMedian(sixes);
-    const mean = getMean(sixes);
-    const mode = getMode(sixes);
-
-    d6Button.src = getImagePathD6(roll);
-    d6Mean.innerText = mean;
-    d6Median.innerText = median;
-    d6Mode.innerText = mode;
-  }
-}
-
 const rollD6 = function() {
-  animationInterval = setInterval(updateD6RollAnimation, 200);
-}
+  const roll = getRandomNumber(6);
+  sixes.push(roll);
+  const median = getMedian(sixes);
+  const mean = getMean(sixes);
+  const mode = getMode(sixes);
 
-const updateD12RollAnimation = function() {
-  const roll1 = getRandomNumber(6);
-  const roll2 = getRandomNumber(6);
-  doubleD6Button1.src = getImagePathD6(roll1);
-  doubleD6Button2.src = getImagePathD6(roll2);
-  animationFrames++;
-  if (animationFrames >= 10) {
-    animationFrames = 0;
-    clearInterval(animationInterval);
-    const roll1 = getRandomNumber(6);
-    const roll2 = getRandomNumber(6);
-    doubleSixes.push(roll1 + roll2);
-    const median = getMedian(doubleSixes);
-    const mean = getMean(doubleSixes);
-    const mode = getMode(doubleSixes);
-
-    doubleD6Button1.src = getImagePathD6(roll1);
-    doubleD6Button2.src = getImagePathD6(roll2);
-    doubleD6Mean.innerText = mean;
-    doubleD6Median.innerText = median;
-    doubleD6Mode.innerText = mode;
-  }
+  d6Button.src = getImagePathD6(roll);
+  d6Mean.innerText = mean;
+  d6Median.innerText = median;
+  d6Mode.innerText = mode;
 }
 
 const rollDoubleD6 = function() {
-  animationInterval = setInterval(updateD12RollAnimation, 200);
+  const roll1 = getRandomNumber(6);
+  const roll2 = getRandomNumber(6);
+  doubleSixes.push(roll1 + roll2);
+  const median = getMedian(doubleSixes);
+  const mean = getMean(doubleSixes);
+  const mode = getMode(doubleSixes);
+
+  doubleD6Button1.src = getImagePathD6(roll1);
+  doubleD6Button2.src = getImagePathD6(roll2);
+  doubleD6Mean.innerText = mean;
+  doubleD6Median.innerText = median;
+  doubleD6Mode.innerText = mode;
 }
 
 const rollD12 = function() {
