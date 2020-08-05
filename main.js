@@ -86,12 +86,16 @@ const resetButton = document.querySelector('#reset-button');
 
 const d6Mean = document.querySelector('#d6-rolls-mean')
 const d6Median = document.querySelector('#d6-rolls-median')
+const d6Mode = document.querySelector('#d6-rolls-mode')
 const doubleD6Mean = document.querySelector('#double-d6-rolls-mean')
 const doubleD6Median = document.querySelector('#double-d6-rolls-median')
+const doubleD6Mode = document.querySelector('#double-d6-rolls-mode')
 const d12Mean = document.querySelector('#d12-rolls-mean')
 const d12Median = document.querySelector('#d12-rolls-median')
+const d12Mode = document.querySelector('#d12-rolls-mode')
 const d20Mean = document.querySelector('#d20-rolls-mean')
 const d20Median = document.querySelector('#d20-rolls-median')
+const d20Mode = document.querySelector('#d20-rolls-mode')
 
 
 /******************
@@ -103,10 +107,12 @@ const rollD6 = function() {
   sixes.push(roll);
   const median = getMedian(sixes);
   const mean = getMean(sixes);
+  const mode = getMode(sixes);
 
   d6Button.src = getImagePathD6(roll);
   d6Mean.innerText = mean;
   d6Median.innerText = median;
+  d6Mode.innerText = mode;
 }
 
 const rollDoubleD6 = function() {
@@ -115,11 +121,13 @@ const rollDoubleD6 = function() {
   doubleSixes.push(roll1 + roll2);
   const median = getMedian(doubleSixes);
   const mean = getMean(doubleSixes);
+  const mode = getMode(doubleSixes);
 
   doubleD6Button1.src = getImagePathD6(roll1);
   doubleD6Button2.src = getImagePathD6(roll2);
   doubleD6Mean.innerText = mean;
   doubleD6Median.innerText = median;
+  doubleD6Mode.innerText = mode;
 }
 
 const rollD12 = function() {
@@ -127,10 +135,12 @@ const rollD12 = function() {
   twelves.push(roll);
   const median = getMedian(twelves);
   const mean = getMean(twelves);
+  const mode = getMode(twelves);
 
   d12Button.src = getImagePathNumbers(roll);
   d12Mean.innerText = mean;
   d12Median.innerText = median;
+  d12Mode.innerText = mode;
 }
 
 const rollD20 = function() {
@@ -138,10 +148,12 @@ const rollD20 = function() {
   twenties.push(roll);
   const median = getMedian(twenties);
   const mean = getMean(twenties);
+  const mode = getMode(twenties);
 
   d20Button.src = getImagePathNumbers(roll);
   d20Mean.innerText = mean;
   d20Median.innerText = median;
+  d20Mode.innerText = mode;
 }
 
 const resetAll = function() {
@@ -156,14 +168,18 @@ const resetAll = function() {
   d12Button.src = './images/start/d12.jpeg';
   d20Button.src = './images/start/d20.jpg';
 
-  d6Mean.innerText = '';
-  d6Median.innerText = '';
-  doubleD6Mean.innerText = '';
-  doubleD6Median.innerText = '';
-  d12Mean.innerText = '';
-  d12Median.innerText = '';
-  d20Mean.innerText = '';
-  d20Median.innerText = '';
+  d6Mean.innerText = 'NA';
+  d6Median.innerText = 'NA';
+  d6Mode.innerText = 'NA';
+  doubleD6Mean.innerText = 'NA';
+  doubleD6Median.innerText = 'NA';
+  doubleD6Mode.innerText = 'NA';
+  d12Mean.innerText = 'NA';
+  d12Median.innerText = 'NA';
+  d12Mode.innerText = 'NA';
+  d20Mean.innerText = 'NA';
+  d20Median.innerText = 'NA';
+  d20Mode.innerText = 'NA';
 }
 
 
@@ -206,54 +222,19 @@ const getMedian = function(rolls) {
 }
 
 const getMode = function(rolls) {
-   const counts = [];
-   for (const roll of rolls) {
-     let found = false;
-     for (const count of counts) {
-       if (count[0] === roll) {
-         found = true;
-         count[1]++;
-       }
-     }
+  const counts = {};
+  let mode = 'NA'
+  for (const roll of rolls) {
+    if (roll in counts) {
+      counts[roll]++;
+    } else {
+      counts[roll] = 1;
+    }
 
-     if (!found) {
-       counts.push([roll, 1]);
-     }
-   }
-   let mode = counts[0][0];
-   let highest = counts[0][1];
-   for (const count of counts) {
-     const roll = count[0];
-     const rollCount = count[1];
-     if (rollCount > highest) {
-       mode = roll;
-       highest = rollCount;
-     }
-   }
+    if (counts[mode] === undefined || counts[roll] > counts[mode]) {
+      mode = roll;
+    }
+  }
 
-   return mode;
-
-  // One pass version
-  // const counts = [];
-  // let mode = rolls[0];
-  // let highestCountSeen = 0;
-  // for (const roll of rolls) {
-    // let found = false;
-    // for (const count of counts) {
-      // if (count[0] === roll) {
-        // count[1]++;
-        // found = true;
-        // if (count[1] > highestCountSeen) {
-          // highestCountSeen = count[1];
-          // mode = count[0];
-        // }
-      // }
-    // }
-// 
-    // if (!found) {
-      // counts.push([roll, 1]);
-    // }
-  // }
-// 
-  // return mode;
+  return mode;
 }
