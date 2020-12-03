@@ -3,10 +3,10 @@
  * DATA *
  **********/
 
-const sixes = [];
-const doubleSixes = [];
-const twelves = [];
-const twenties = [];
+const sixes = [8, 3];
+const doubleSixes = [8, 3];
+const twelves = [8, 3];
+const twenties = [8, 3];
 
 
 /*******************************************************************
@@ -30,9 +30,11 @@ const sortByNumber = function(arr) {
   return arr.slice().sort(byNumber);
 }
 
-/********************************
-* STRETCH GOAL HELPER FUNCTIONS *
-********************************/
+
+
+/*************************************
+ * TOTALLY OPTIONAL HELPER FUNCTIONS *
+ *************************************/
 
 
 const getImagePathD6 = function(roll) {
@@ -41,29 +43,6 @@ const getImagePathD6 = function(roll) {
 
 const getImagePathNumbers = function(roll) {
   return `./images/numbers/${roll}.png`
-}
-
-const setText = function(selector, text) {
-  document.querySelector(selector).innerText = text;
-}
-
-const setSrc = function(selector, src) {
-  document.querySelector(selector).src = src;
-}
-
-const addClickEventHandler = function(selector, func) {
-  document.querySelector(selector).addEventListener('click', func);
-}
-
-const addThing = function(selector, value, type) {
-  const node = document.querySelector(selector);
-  if (type === 'src') {
-    node.src = value;
-  } else if (type === 'text') {
-    node.innerText = value;
-  } else if (type === 'click') {
-    node.addEventListener('click', value);
-  }
 }
 
 
@@ -109,7 +88,7 @@ const rollD6 = function() {
   const mean = getMean(sixes);
   const mode = getMode(sixes);
 
-  d6Button.src = getImagePathD6(roll);
+  d6Button.src = `./images/d6/${roll}.png`;
   d6Mean.innerText = mean;
   d6Median.innerText = median;
   d6Mode.innerText = mode;
@@ -163,6 +142,7 @@ const resetAll = function() {
   twenties.splice(0)
 
   d6Button.src = './images/start/d6.png';
+  d6Button.style.src = './images/start/d6.png';
   doubleD6Button1.src = './images/start/d6.png';
   doubleD6Button2.src = './images/start/d6.png';
   d12Button.src = './images/start/d12.jpeg';
@@ -208,14 +188,11 @@ const getMean = function(rolls) {
   return (sum / rolls.length).toFixed(2);
 }
 
-
 const getMedian = function(rolls) {
   const sorted = sortByNumber(rolls);
   const midPoint = Math.floor(sorted.length / 2)
   if (sorted.length % 2 === 0) {
-    return getMean([sorted[midPoint], sorted[midPoint - 1]]);
-    // Or, the manual way:
-    //return ((sorted[midPoint] + sorted[midPoint - 1]) / 2).toFixed(2);
+    return ((sorted[midPoint] + sorted[midPoint - 1]) / 2).toFixed(2);
   } else {
     return sorted[midPoint].toFixed(2);
   }
@@ -238,3 +215,6 @@ const getMode = function(rolls) {
 
   return mode;
 }
+
+
+resetAll();
